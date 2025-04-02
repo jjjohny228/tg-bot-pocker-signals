@@ -27,9 +27,38 @@ class Keyboards:
     "🇪🇺 EUR/HUF OTC 🇭🇺", "🇺🇸 USD/VND OTC 🇻🇳", "🇬🇧 GBP/AUD OTC 🇦🇺",
     "🇺🇸 USD/PHP OTC 🇵🇭", "🇺🇸 USD/CLP OTC 🇨🇱", "🇺🇸 USD/COP OTC 🇨🇴"
 )
+    crypto_otc = (
+        "   Cardano OTC   ", "   BNB OTC   ", "   Dogecoin OTC   ", "   Ethereum OTC   ", "   Solana OTC   ",
+        "   TRON OTC   ",
+        "   Ripple OTC   ", "   Avalanche OTC   ", "   Polygon OTC   ", "   Chainlink OTC   ", "   Bitcoin ETF OTC   ",
+        "   Toncoin OTC   ", "   Litecoin OTC   ", "   Polkadot OTC   ", "   Bitcoin OTC   "
+    )
+
+    commodities_otc = (
+        "   Brent Oil OTC   ", "   WTI Crude Oil OTC   ", "   Silver OTC   ", "   Gold OTC   ", "   Natural Gas OTC   ",
+        "   Palladium spot OTC   ", "   Platinum spot OTC   "
+    )
+
+    stocks_otc = (
+        "   Apple OTC   ", "   American Express OTC   ", "   FACEBOOK INC OTC   ", "   Intel OTC   ",
+        "   Microsoft OTC   ",
+        "   Tesla OTC   ", "   Amazon OTC   ", "   Cisco OTC   ", "   Netflix OTC   ", "   Citigroup Inc OTC   ",
+        "   McDonald's OTC   ", "   Johnson & Johnson OTC   ", "   ExxonMobil OTC   ", "   Alibaba OTC   ",
+        "   VISA OTC   ", "   TWITTER OTC   ", "   Pfizer Inc OTC   ", "   FedEx OTC   ", "   Boeing Company OTC   "
+    )
+
+    indices_otc = (
+        "   AUS 200 OTC   ", "   100GBP OTC   ", "   D30EUR OTC   ", "   DJI30 OTC   ", "   E35EUR OTC   ",
+        "   E50EUR OTC   ",
+        "   F40EUR OTC   ", "   JPN225 OTC   ", "   US100 OTC   ", "   SP500 OTC   "
+    )
 
     all_pairs = {
         'currency': currency_pairs,
+        'cryptocurrency': crypto_otc,
+        'commodities': commodities_otc,
+        'shares': stocks_otc,
+        'indices': indices_otc,
     }
     @staticmethod
     def get_welcome_menu() -> InlineKeyboardMarkup:
@@ -43,15 +72,20 @@ class Keyboards:
                                                      questions_pirates_button, instruction_button, feedback_button)
 
     @staticmethod
-    def get_registration_menu(menu_owner: str) -> InlineKeyboardMarkup:
+    def get_registration_menu() -> InlineKeyboardMarkup:
         registration_button = InlineKeyboardButton('🔗Registration link', url=os.getenv('REF_URL', 'Впишите реферальную ссылку'))
         check_registration_button = InlineKeyboardButton('🔎Check Registration', callback_data='check_registration')
-        back_button = InlineKeyboardButton('🔙Back', callback_data=f'start_callback')
+        back_button = InlineKeyboardButton('🔙Back', callback_data=f'unauthenticated_start_callback')
         return InlineKeyboardMarkup(row_width=1).add(registration_button, check_registration_button, back_button)
 
     @staticmethod
-    def get_back_registration_button(menu_owner: str) -> InlineKeyboardMarkup:
+    def get_back_registration_button() -> InlineKeyboardMarkup:
         menu_button = InlineKeyboardButton('🔙Back', callback_data=f'registration_request')
+        return InlineKeyboardMarkup(row_width=1).add(menu_button)
+
+    @staticmethod
+    def get_back_main_button() -> InlineKeyboardMarkup:
+        menu_button = InlineKeyboardButton('🔙Back', callback_data=f'unauthenticated_start_callback')
         return InlineKeyboardMarkup(row_width=1).add(menu_button)
 
     @staticmethod
@@ -90,7 +124,7 @@ class Keyboards:
 
         # Добавляем кнопки с валютными парами
         for pair in current_pairs:
-            pair_text = pair[3:len(pair)-2]
+            pair_text = pair[3:len(pair)-3]
             keyboard.insert(InlineKeyboardButton(text=pair, callback_data=f"pair_{pair_text}"))
 
         # Кнопки пагинации
@@ -108,7 +142,7 @@ class Keyboards:
         keyboard.row(*pagination_buttons)
 
         # Кнопка "Назад"
-        keyboard.add(InlineKeyboardButton(text="⬅ Назад", callback_data="get_signals"))
+        keyboard.add(InlineKeyboardButton(text="🔙Back", callback_data="start_callback"))
 
         return keyboard
 

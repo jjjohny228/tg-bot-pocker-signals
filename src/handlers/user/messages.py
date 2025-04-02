@@ -3,6 +3,7 @@ import os
 from aiogram.types import Message
 from typing import Literal
 from dotenv import load_dotenv
+from aiogram.utils.markdown import link, bold, underline
 
 load_dotenv()
 
@@ -58,7 +59,21 @@ class Messages:
         return text
 
     @staticmethod
-    def get_check_registration_photo() -> str:
+    def get_ask_for_pocket_id_message() -> str:
+        text = """
+        🚀Send your Pocket Option account ID in the message below👇
+
+⚠️Important: ID should be sent in numbers only - no letters❕️
+"""
+        return text
+
+    @staticmethod
+    def get_bullshit_registration_message() -> str:
+        text = "❕ You sent something you don't understand! The pocket option account ID consists of 8 digits."
+        return text
+
+    @staticmethod
+    def get_registration_photo() -> str:
         return 'https://habrastorage.org/webt/t2/pq/uo/t2pquodi2tjrdshq_zq2sp3qq4e.jpeg'
 
     @staticmethod
@@ -127,18 +142,69 @@ class Messages:
         return text
 
     @staticmethod
-    def get_currency_pairs_photo() -> str:
-        return 'https://habrastorage.org/webt/83/nc/fy/83ncfybyx2lcbwei2qz7vyqjzlk.jpeg'
+    def get_currency_pairs_photo(signal_type: str) -> str:
+        if signal_type == 'currency':
+            return 'https://habrastorage.org/webt/83/nc/fy/83ncfybyx2lcbwei2qz7vyqjzlk.jpeg'
+        elif signal_type == 'cryptocurrency':
+            return 'https://habrastorage.org/webt/vz/0q/bi/vz0qbinzp1kaaffiakv5fe5-uco.jpeg'
+        elif signal_type == 'commodities':
+            return 'https://habrastorage.org/webt/8-/nd/im/8-ndimxza_p6tjbzhbou4vg36cs.jpeg'
+        elif signal_type == 'shares':
+            return 'https://habrastorage.org/webt/4f/h8/mx/4fh8mxbar_4gpaagyddnkkiop3g.jpeg'
+        elif signal_type == 'indices':
+            return 'https://habrastorage.org/webt/jb/s2/b7/jbs2b7sojl576e9zux3tlatpnwy.jpeg'
 
     @staticmethod
-    def get_currency_pairs_message() -> str:
-        text = """↓Select currency pair ↓
+    def get_currency_pairs_message(signal_type: str) -> str:
+        text = ''
+        if signal_type == 'currency':
+            text = """↓Select currency pair ↓
 
 - Recommended pair: USD/BDT OTC
 - Profitability: 98%
 - Volatility: low
 
 ⚠️Important: choose assets with high payout percentage.
+"""
+        elif signal_type == 'cryptocurrency':
+            text = """
+            ↓ Choose a cryptocurrency ↓
+
+• Recommended pair: Bitcoin OTC
+• Liquidity: 94%
+• Volatility: High
+
+⚠️ Important: Select assets with a high payout percentage.
+"""
+        elif signal_type == 'commodities':
+            text = """
+            ↓ Choose a commodity ↓
+
+• Recommended pair: Natural Gas OTC
+• Liquidity: 95%
+• Volatility: Low
+
+⚠️ Important: Select assets with a high payout percentage.
+"""
+        elif signal_type == 'shares':
+            text = """
+            ↓ Choose a stock ↓
+
+• Recommended pair: Apple OTC
+• Liquidity: 94%
+• Volatility: Medium
+
+⚠️ Important: Select assets with a high payout percentage.
+"""
+        elif signal_type == 'indices':
+            text = """
+            ↓ Choose an index ↓
+
+• Recommended pair: E50EUR OTC
+• Liquidity: 96%
+• Volatility: Low
+
+⚠️ Important: Select assets with a high payout percentage.
 """
         return text
 
@@ -202,13 +268,14 @@ class Messages:
 
 💹 OTC Asset: {pair_text}
 ⌛ Trade Time: {trade_time}
-⏱️ Open Time: {open_time}
+⏱️ Open Time: <b><u>{open_time}</u></b>
 
 📊 Technical Analysis: {trade_move}
 🔎 GPT-4.0 Analysis: {trade_move}
 {indicator_text_part} : {trade_move}
 
-🚀 Signal from {os.getenv('BOT_NAME')} Bot: {bot_signal}"""
+🚀 Signal from {os.getenv('BOT_NAME')} Bot: {bot_signal}
+        """
         return text
 
     @staticmethod

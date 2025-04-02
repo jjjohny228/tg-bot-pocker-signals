@@ -49,10 +49,10 @@ class Messages:
 
     @staticmethod
     def get_registration_message() -> str:
-        text = """
-        🔑To get full access to Go Plus robot with more than 100 assets, you need to create a new account on Pocket Option broker strictly by following the link 🔗
+        text = f"""
+        🔑To get full access to Go Plus robot with more than 100 assets, you need to create a new account on Pocket Option broker strictly by following the <a href='{os.getenv('REF_URL')}'>link</a> 🔗
 
-❗️Attention! Register your account strictly by following the link below. Otherwise the bot will not be able to verify the account and you will not get access to the bot go plus❗️.
+❗️Attention! Register your account strictly by following the <a href='{os.getenv('REF_URL')}'>link</a> below. Otherwise the bot will not be able to verify the account and you will not get access to the bot go plus❗️.
 
 ⚠️Important: do not give your ID to anyone, as the bot is issued only for 1 account❕
 """

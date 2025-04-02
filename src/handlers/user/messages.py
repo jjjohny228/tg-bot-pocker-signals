@@ -154,13 +154,24 @@ class Messages:
         return text
 
     @staticmethod
-    def get_indicator_message() -> str:
+    def get_candle_analysis_message() -> str:
         text = """
         ↓ Select the type of analysis ↓
 
 - **Recommended:** line
 
 ⚠️ **Important:** Analyze the chart yourself before receiving a signal.
+"""
+        return text
+
+    @staticmethod
+    def get_indicator_analysis_message() -> str:
+        text = """
+        ↓Select indicator ↓
+
+- Recommended: MACD
+
+⚠️Important: analyze the chart yourself before getting a signal.
 """
         return text
 
@@ -181,20 +192,23 @@ class Messages:
         return text
 
     @staticmethod
-    def get_signal_message(pair_text: str, order_time: str, open_time: str,
-                               indicator: str, trade_move: Literal['Buy', 'Sell']) -> str:
+    def get_signal_message(pair_text: str, trade_time: str, open_time: str,
+                           global_analysis_type: Literal['candle', 'indicator'], analysis_type: str,
+                           trade_move: Literal['Buy', 'Sell']) -> str:
+        indicator_text_part = f'📈 Indicator - {analysis_type}' if global_analysis_type == 'indicator' else f'🧨 Candle type - {analysis_type}'
+        bot_signal = 'UP ⬆️' if trade_move == 'Buy' else 'DOWN ⬇️'
         text = f"""
         Analysis passed successfully ✅️
 
 💹 OTC Asset: {pair_text}
-⌛ Trade Time: {order_time}
-⏱️ Open Time: {open_time} UTC
+⌛ Trade Time: {trade_time}
+⏱️ Open Time: {open_time}
 
 📊 Technical Analysis: {trade_move}
-🔎 GPT-4.0 Analysis: Actively {trade_move}
-📈 Indicator - {indicator}: Actively {trade_move}
+🔎 GPT-4.0 Analysis: {trade_move}
+{indicator_text_part} : {trade_move}
 
-🚀 Signal from {os.getenv('BOT_NAME')} Bot: UP ⬆️"""
+🚀 Signal from {os.getenv('BOT_NAME')} Bot: {bot_signal}"""
         return text
 
     @staticmethod

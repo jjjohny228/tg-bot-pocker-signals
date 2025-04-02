@@ -10,6 +10,7 @@ from src.utils import logger
 
 class Keyboards:
     PAIRS_PER_PAGE = 6
+
     currency_pairs = (
     "🇦🇺 AUD/CAD OTC 🇨🇦", "🇦🇺 AUD/CHF OTC 🇨🇭", "🇦🇺 AUD/USD OTC 🇺🇸",
     "🇨🇦 CAD/CHF OTC 🇨🇭", "🇨🇦 CAD/JPY OTC 🇯🇵", "🇨🇭 CHF/NOK OTC 🇳🇴",
@@ -113,9 +114,62 @@ class Keyboards:
 
     @staticmethod
     def get_analysis_menu():
-        indicator_analysis_button = InlineKeyboardButton('🚀Indicator🚀', callback_data='currency_signal')
-        candle_analysis_button = InlineKeyboardButton('🧨Candle🧨', callback_data='currency_signal')
+        indicator_analysis_button = InlineKeyboardButton('🚀Indicator🚀', callback_data='indicator_analysis')
+        candle_analysis_button = InlineKeyboardButton('🧨Candle🧨', callback_data='candle_analysis')
         return InlineKeyboardMarkup(row_width=1).add(indicator_analysis_button, candle_analysis_button)
 
+    @staticmethod
+    def get_candle_analysis_menu():
+        first_button = InlineKeyboardButton('Line', callback_data='Line_analysis_type')
+        second_button = InlineKeyboardButton('Candles', callback_data='Candle_analysis_type')
+        third_button = InlineKeyboardButton('Bars', callback_data='Bars_analysis_type')
+        fourth_button = InlineKeyboardButton('Heikin Ashi', callback_data='Heikin Ashi_analysis_type')
+        return InlineKeyboardMarkup(row_width=1).add(first_button, second_button, third_button, fourth_button)
 
+    @classmethod
+    def get_indicator_analysis_menu(cls, page: int = 0) -> InlineKeyboardMarkup | None:
+        indicators = (
+            "Alligator", "Bollinger Bands", "Donchian Channels", "Fractal", "Keltner channel", "MACD",
+            "Momentum", "Moving Average", "Parabolic SAR", "RSI", "Stochastic Oscillator", "Stochastic Oscillator",
+            "Vortex", "Zig Zag"
+        )
+        keyboard = InlineKeyboardMarkup(row_width=2)
+        start_idx = page * cls.PAIRS_PER_PAGE
+        end_idx = start_idx + cls.PAIRS_PER_PAGE
+        if not indicators:
+            logger.error("There is no such pair type in all_pairs")
+            return
+        current_indicators = indicators[start_idx:end_idx]
 
+        # Добавляем кнопки с валютными парами
+        for indicator in current_indicators:
+            keyboard.insert(InlineKeyboardButton(text=indicator, callback_data=f"{indicator}_analysis_type"))
+
+        # Кнопки пагинации
+        total_pages = (len(indicators) - 1) // cls.PAIRS_PER_PAGE + 1
+        pagination_buttons = []
+
+        if page > 0:
+            pagination_buttons.append(InlineKeyboardButton(text="⬅️", callback_data=f"indicator_page_{page - 1}"))
+
+        pagination_buttons.append(InlineKeyboardButton(text=f"{page + 1}/{total_pages}", callback_data="none"))
+
+        if end_idx < len(indicators):
+            pagination_buttons.append(InlineKeyboardButton(text="➡️", callback_data=f"indicator_page_{page + 1}"))
+
+        keyboard.row(*pagination_buttons)
+
+        return keyboard
+
+    @staticmethod
+    def get_time_menu():
+        timeframes = ("S5", "S10", "S15", "S20", "S30", "M1", "M2", "M3", "M4", "M5", "M10")
+        keyboard = InlineKeyboardMarkup(row_width=2)
+        for timeframe in timeframes:
+            keyboard.insert(InlineKeyboardButton(text=timeframe, callback_data=f"{timeframe}_time"))
+        return keyboard
+
+    @staticmethod
+    def get_signal_menu():
+        indicator_analysis_button = InlineKeyboardButton('⟳', callback_data='get_signals')
+        return InlineKeyboardMarkup(row_width=1).add(indicator_analysis_button)

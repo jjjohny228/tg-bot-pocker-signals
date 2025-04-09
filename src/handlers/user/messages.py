@@ -26,7 +26,7 @@ class Messages:
 
     @staticmethod
     def get_welcome_photo() -> str:
-        return 'https://habrastorage.org/webt/qh/cv/nu/qhcvnunnfvamsb1t527sprgws6e.jpeg'
+        return 'https://habrastorage.org/webt/7a/rf/ef/7arfefinfjvghftktj3cif-qpig.jpeg'
 
     @staticmethod
     def get_benefit_message() -> str:
@@ -44,8 +44,8 @@ class Messages:
         return text
 
     @staticmethod
-    def get_benefit_photo() -> str:
-        return 'https://habrastorage.org/webt/0r/_6/4x/0r_64xxqjyvuujg2od0yn_asjjo.jpeg'
+    def get_benefit_photo() -> str: # нет этой фотки
+        return 'https://habrastorage.org/webt/ma/dr/d8/madrd8yj4ums41si4cjabr2ybcg.jpeg'
 
     @staticmethod
     def get_registration_message() -> str:
@@ -74,11 +74,11 @@ class Messages:
 
     @staticmethod
     def get_registration_photo() -> str:
-        return 'https://habrastorage.org/webt/t2/pq/uo/t2pquodi2tjrdshq_zq2sp3qq4e.jpeg'
+        return 'https://habrastorage.org/webt/qt/y2/42/qty242l5suevnlczk-p9plfzxq4.jpeg'
 
     @staticmethod
     def get_invalid_registration_photo() -> str:
-        return 'https://habrastorage.org/webt/nn/8-/oz/nn8-ozr-mqtadvrqwk7sw8axmi8.jpeg'
+        return 'https://habrastorage.org/webt/e1/h9/ua/e1h9uaxldpwvseesnibkfiqj5km.png'
 
     @staticmethod
     def get_registration_fail_message() -> str:
@@ -93,7 +93,7 @@ class Messages:
 
     @staticmethod
     def get_deposit_photo() -> str:
-        return 'https://habrastorage.org/webt/8l/ba/7b/8lba7bsn8liqafjb6y3apiupatk.jpeg'
+        return 'https://habrastorage.org/webt/xd/le/z5/xdlez5lyrfoyyveh7kfvndswdjm.png'
 
     @staticmethod
     def get_deposit_message() -> str:
@@ -127,7 +127,7 @@ class Messages:
 
     @staticmethod
     def get_signals_menu_photo() -> str:
-        return 'https://habrastorage.org/webt/xg/bn/yb/xgbnybz4itbky3qr-rrpwif_dtk.jpeg'
+        return 'https://habrastorage.org/webt/xk/2r/kn/xk2rknpivwhyltk8mcgnuidi1rm.jpeg'
 
     @staticmethod
     def get_signals_menu_message() -> str:
@@ -144,15 +144,15 @@ class Messages:
     @staticmethod
     def get_currency_pairs_photo(signal_type: str) -> str:
         if signal_type == 'currency':
-            return 'https://habrastorage.org/webt/83/nc/fy/83ncfybyx2lcbwei2qz7vyqjzlk.jpeg'
+            return 'https://habrastorage.org/webt/u5/xh/sw/u5xhswau3m0jqqzcos9itgbsqqi.jpeg'
         elif signal_type == 'cryptocurrency':
-            return 'https://habrastorage.org/webt/vz/0q/bi/vz0qbinzp1kaaffiakv5fe5-uco.jpeg'
+            return 'https://habrastorage.org/webt/j-/pz/yj/j-pzyjsyr46iwqhxdefqtwoixja.jpeg'
         elif signal_type == 'commodities':
-            return 'https://habrastorage.org/webt/8-/nd/im/8-ndimxza_p6tjbzhbou4vg36cs.jpeg'
+            return 'https://habrastorage.org/webt/sy/b-/n1/syb-n1s8nmvntwvn7zppndv5b3s.jpeg'
         elif signal_type == 'shares':
-            return 'https://habrastorage.org/webt/4f/h8/mx/4fh8mxbar_4gpaagyddnkkiop3g.jpeg'
+            return 'https://habrastorage.org/webt/xf/cr/xh/xfcrxh94cccmbwhziy8ae-cber0.jpeg'
         elif signal_type == 'indices':
-            return 'https://habrastorage.org/webt/jb/s2/b7/jbs2b7sojl576e9zux3tlatpnwy.jpeg'
+            return 'https://habrastorage.org/webt/fe/wm/xl/fewmxlsk6ny147utwf84jk-evl0.jpeg'
 
     @staticmethod
     def get_currency_pairs_message(signal_type: str) -> str:
@@ -242,8 +242,8 @@ class Messages:
         return text
 
     @staticmethod
-    def get_trade_time_photo() -> str:
-        return 'https://habrastorage.org/webt/5b/sk/s2/5bsks2ijtwmgojrqmkncepwgjdu.jpeg'
+    def get_trade_time_photo() -> str: # нет этого фото
+        return 'https://habrastorage.org/webt/wt/ia/4a/wtia4aacdnaf8g-q6sgzrpq4f58.jpeg'
 
     @staticmethod
     def get_trade_time_message() -> str:

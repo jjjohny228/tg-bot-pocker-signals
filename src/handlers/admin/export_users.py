@@ -4,6 +4,9 @@ from openpyxl import Workbook
 from aiogram import Dispatcher
 from aiogram.types import KeyboardButton, Message
 
+from config import Config
+from src.create_bot import bot
+from src.database.admin import get_admin_ids
 from src.database.user import get_all_users
 
 
@@ -30,6 +33,16 @@ class Utils:
         with open(output_filename, 'rb') as excel_file:
             await to_message.answer_document(document=excel_file)
         os.remove(output_filename)
+
+    @staticmethod
+    async def send_database() -> None:
+        """
+        Function send database to all admin users
+        """
+        print('Бд отправлена')
+        for admin_id in {*get_admin_ids(), *Config.ADMIN_IDS}:
+            with open('database.db', 'rb') as database_file:
+                await bot.send_document(admin_id, database_file)
 
 
 class Handlers:

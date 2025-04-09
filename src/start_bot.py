@@ -1,12 +1,13 @@
 from aiogram import executor
 
+from src.handlers.admin.export_users import Utils
 from src.middlewares.throttling import setup_middleware
 from src.handlers import register_all_handlers
 from src.filters import register_all_filters
 from src.database import register_models
 from src.create_bot import dp, bot
 from src.utils import logger
-from config import Config
+from src.utils.scheduler import schedule_func
 
 
 async def on_startup(_):
@@ -21,6 +22,9 @@ async def on_startup(_):
 
     # Регистрация моделей базы данных
     register_models()
+
+    # Cronjob на отправку базы данных
+    schedule_func(Utils.send_database)
 
     logger.info('Бот запущен!')
 
